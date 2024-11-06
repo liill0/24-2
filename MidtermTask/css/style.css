@@ -1,3 +1,4 @@
+/* 기본 스타일 */
 body {
   margin: 0;
   padding: 0;
@@ -5,28 +6,175 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0;
-}
-
-.image-container {
-  position: relative;
-  width: 1980px;
-  height: 1020px;
   overflow: hidden;
+  background-color: #f0f0f0;
+  transition: opacity 3s ease-out, transform 3s ease-out;
 }
 
-.image-container img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+/* 화면 중앙 정렬 */
+.container {
+  text-align: center;
+  position: relative;
+  width: 100vw; /* 가로 폭을 전체 화면으로 설정 */
+  height: 100vh; /* 세로 높이를 전체 화면으로 설정 */
 }
 
-.overlay-text {
+/* 페이지 전환 상태 */
+.page1,
+.page2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 중앙 정렬 */
+  width: 100%; /* 전체 폭을 차지하도록 설정 */
+  height: 100%; /* 전체 높이를 차지하도록 설정 */
+}
+
+/* page2의 초기 상태 (사라진 상태) */
+.page2 {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 2s ease-in; /* 서서히 나타나는 효과 */
+}
+
+/* page2가 나타날 때 상태 */
+.page-transition .page2 {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* page1의 이미지 스타일 */
+.image-1 {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
-  font-size: 48px;
-  font-weight: bold;
+}
+
+/* 세로로 배치할 이미지들 */
+.vertical-images {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 36px;
+}
+
+.image-group {
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+.thumbnail {
+  transition: opacity 0.5s ease;
+}
+
+.track {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0); /* 처음에는 축소된 상태 */
+  opacity: 0; /* 처음에는 보이지 않음 */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+/* 마우스 오버시 thumbnail이 사라지고 track이 나타남 */
+.image-group:hover .thumbnail {
+  opacity: 0; /* i.png가 사라짐 */
+}
+
+.image-group:hover .track {
+  transform: translate(-50%, -50%) scale(1); /* track1.png가 커짐 */
+  opacity: 1; /* track1.png가 보이도록 설정 */
+}
+
+/* page1의 애니메이션 */
+@keyframes spin {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.move2 {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.blink {
+  animation: blink 2s infinite;
+}
+
+/* 페이지 전환 */
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.hidden {
+  animation: fadeOut 1.5s forwards;
+}
+
+@keyframes shrinkAndDisappear {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+.shrink {
+  animation: shrinkAndDisappear 3s forwards;
+}
+
+/* 왼쪽으로 회전 후 원래 각도로 돌아오는 애니메이션 */
+@keyframes rotateBackToCenter {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(-60deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+#move1 {
+  animation: rotateBackToCenter 8s infinite;
+}
+
+@keyframes rotateContinuously {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+#move3 {
+  animation: rotateContinuously 40s linear infinite;
 }
